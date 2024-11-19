@@ -44,7 +44,7 @@ Furo’s decision tree implementation provides a visual and logical approach to 
 - Calculate **Gini impurity** to ensure optimal splits and accurate predictions.  
 - Support for depth control and interpretability for clear understanding.  
 
-This module is highly useful for tasks where interpretability and simplicity are key, such as customer segmentation or medical diagnoses. 🩺
+This module is highly useful for tasks where interpretability and simplicity are key, such as customer segmentation. 
 
 ---
 
