@@ -1,0 +1,1 @@
+from .FastBPE import FastBPE
