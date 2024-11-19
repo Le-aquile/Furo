@@ -1,4 +1,4 @@
-# Presentation: Furo - A Lightweight Machine Learning Library 🚀
+# Presentation: Furo 🚀
 
 Welcome to **Furo**, a versatile and lightweight machine learning library designed for building and experimenting with machine learning models from scratch. Developed with **NumPy**, Furo provides tools to understand and implement core machine learning algorithms with complete control over the process. 💻🔍
 
