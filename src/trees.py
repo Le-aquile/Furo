@@ -222,3 +222,6 @@ if __name__ == "__main__":
     samples = np.array([[2.5, 2.4], [1.3, 1.5], [3.2, 3.07], [1.2, 1.2], [300.2, 100.1]])
     predictions = tree.predict(samples)
     print("Predizioni:", predictions)
+
+
+

@@ -140,7 +140,7 @@ if __name__ == "__main__":
 
     layers_configuration = [3, 6, 6, 6,3]
     activators = [swift, tanh, sigmoid, linear,softmax]
-    learning_rate = 0.1
+    learning_rate = 0.01
 
     network = NeuralNetwork(layers_configuration, activators, learning_rate)
 
