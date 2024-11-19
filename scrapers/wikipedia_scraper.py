@@ -13,7 +13,7 @@ def get_pages_in_category(category_name, lang='it'):
     # Specifica un user agent personalizzato
     user_agent = "WikipediaInfoGetter/1.0"
     wiki_wiki = wikipediaapi.Wikipedia(user_agent=user_agent, language=lang)
-    
+    page_content = []
     # Accedi alla categoria
     category = wiki_wiki.page(f"Categoria:{category_name}")
     if not category.exists():
@@ -26,18 +26,18 @@ def get_pages_in_category(category_name, lang='it'):
         if subpage.ns == 0:  # Verifica se è una pagina di contenuto (non sottocategoria, ecc.)
             print(f"- {subpage.title}")
             page_titles.append(subpage.title)
-            page_content = wiki_wiki.page(subpage.title)
-            with open(f"{subpage.title}.txt", "w", encoding="utf-8") as file:
-                file.write(page_content.text)
+            page_content.apppend(subpage.text)
     
-    return page_titles
+    return zip(page_titles, page_content)
 
 
-# Esempio di utilizzo
-category_name = "Intelligenza artificiale"
-pages = get_pages_in_category(category_name)
+if __name__ == "__main__":
+    # Esempio di utilizzo
+    category_name = "Intelligenza artificiale"
+    pages = get_pages_in_category(category_name)
 
-# Puoi salvare i titoli o elaborarli ulteriormente
-print("\nElenco di pagine:")
-for page in pages:
-    print(page)
+    # Puoi salvare i titoli o elaborarli ulteriormente
+    print("\nElenco di pagine:")
+    for page in pages:
+        print(page)
+

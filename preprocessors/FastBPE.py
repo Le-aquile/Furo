@@ -3,6 +3,45 @@ import collections
 from typing import List, Tuple, Dict
 
 class FastBPE:
+    """
+    A class for performing Byte Pair Encoding (BPE) tokenization and training.
+
+    This class implements the BPE algorithm for subword tokenization. It allows users to:
+    - Train a BPE tokenizer on a corpus of text.
+    - Encode new text into subword tokens based on the learned BPE merges.
+
+    BPE is useful for tasks such as machine translation, text generation, and other NLP tasks where handling out-of-vocabulary words is essential.
+
+    Example Usage:
+
+    1. **Initialize** the FastBPE tokenizer with an optional vocabulary and list of merges:
+       ```python
+       bpe_tokenizer = FastBPE(vocab={}, merges=[])
+       ```
+
+    2. **Read text from a file**:
+       ```python
+       text = bpe_tokenizer.read_file("example_text.txt")
+       ```
+
+    3. **Train the tokenizer** using the text and specify the number of merges:
+       ```python
+       bpe_tokenizer.train_bpe(text, num_merges=10)
+       ```
+
+    4. **Encode new text** using the trained BPE model:
+       ```python
+       encoded_tokens = bpe_tokenizer.encode("low lowery")
+       ```
+
+    Attributes:
+        vocab (Dict[str, int]): A dictionary representing the vocabulary, where keys are words and values are frequencies.
+        merges (List[Tuple[str, str]]): A list of token pair merges learned during BPE training.
+        bpe_ranks (Dict[Tuple[str, str], int]): A mapping from token pairs to their merge rank.
+        merged_vocab (Dict[str, List[str]]): A cached vocabulary where words are split into individual characters for encoding.
+    """
+
+
     def __init__(self, vocab: Dict[str, int] = None, merges: List[Tuple[str, str]] = None):
         self.vocab = vocab if vocab else {}
         self.merges = merges if merges else []
@@ -106,19 +145,3 @@ class FastBPE:
 
 
 
-if False: #Just example code
-    # Example Usage
-    text_file = "example_text.txt"
-
-    # Initialize the FastBPE tokenizer with vocabulary and a list of merges
-    bpe_tokenizer = FastBPE(vocab={}, merges=[])
-
-    # Read text from a file
-    text = bpe_tokenizer.read_file(text_file)
-
-    # Train the tokenizer with the text and define how many merges to apply
-    bpe_tokenizer.train_bpe(text, num_merges=10)
-
-    # Encoding new text using the learned BPE
-    encoded_tokens = bpe_tokenizer.encode("low lowery")
-    print(f"Encoded Tokens: {encoded_tokens}")
