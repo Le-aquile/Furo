@@ -37,6 +37,23 @@ def sigmoid(x) -> np.ndarray:
     x = np.clip(x, -500, 500)
     return 1 / (1 + np.exp(-x))
 
+
+def swift(x) -> np.ndarray:
+    """
+    Applies the Swift activation function to the input.
+
+    Parameters
+    ----------
+    x : array-like
+        The input values.
+
+    Returns
+    -------
+    np.ndarray
+        The Swift of the input values, i.e. x * 1 / (1 + exp(-x)).
+    """
+    x = np.clip(x, -500, 500)
+    return x * sigmoid(x)
 def softmax(x) -> np.ndarray:
     """
     Applies the softmax activation function to the input.

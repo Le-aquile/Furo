@@ -1,6 +1,6 @@
 import numpy as np
 
-from activators import relu, sigmoid, tanh, leaky_relu, softmax, linear
+from activators import relu, sigmoid, tanh, leaky_relu, softmax, linear, swift
 
 def mse_loss(y_true, y_pred):
     return np.mean((y_true - y_pred) ** 2)
@@ -58,15 +58,17 @@ class NeuralNetwork:
         for i in reversed(range(len(self.weights))):
             layer_output = activations[i + 1]
             if self.activators[i] == relu:
-                activation_grad = (layer_output > 0).astype(float)
+                activation_grad = relu(layer_output)
             elif self.activators[i] == sigmoid:
-                activation_grad = layer_output * (1 - layer_output)
+                activation_grad = sigmoid(layer_output)
             elif self.activators[i] == tanh:
-                activation_grad = 1 - np.tanh(layer_output) ** 2
+                activation_grad = tanh(layer_output)
             elif self.activators[i] == softmax:
                 activation_grad = softmax(layer_output)
             elif self.activators[i] == linear:
                 activation_grad = 1
+            elif self.activators[i] == swift:
+                activation_grad = swift(layer_output)
             elif self.activators[i] == leaky_relu:
                 alpha = 0.01
                 activation_grad = np.where(layer_output > 0, 1, alpha)
@@ -132,13 +134,13 @@ class NeuralNetwork:
 
 if __name__ == "__main__":
     print("Example usage:")
-    input_data = np.random.rand(3, 10000)  
-    target_output = np.random.rand(3, 10000)
+    input_data = np.random.rand(3, 100)  
+    target_output = np.random.rand(3, 100)
 
 
     layers_configuration = [3, 6, 6, 6,3]
-    activators = [leaky_relu, tanh, sigmoid, linear,softmax]
-    learning_rate = 0.06
+    activators = [swift, tanh, sigmoid, linear,softmax]
+    learning_rate = 0.1
 
     network = NeuralNetwork(layers_configuration, activators, learning_rate)
 
@@ -149,3 +151,4 @@ if __name__ == "__main__":
     test_data = np.random.rand(3, 5)
     predictions = network.predict(test_data)
     print("Predictions on new data classes:", predictions)
+
