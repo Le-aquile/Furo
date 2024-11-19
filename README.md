@@ -1,6 +1,6 @@
 # Presentation: Furo 🚀
 
-Welcome to **Furo**, a versatile and lightweight machine learning library designed for building and experimenting with machine learning models from scratch. Developed with **NumPy**, Furo provides tools to understand and implement core machine learning algorithms with complete control over the process. 💻🔍
+Welcome to **Furo**, a versatile and lightweight machine learning library designed for building and experimenting with machine learning models. Developed from scratch with **NumPy**, Furo provides tools to understand and implement core machine learning algorithms with complete control over the process. 💻🔍
 
 Unlike libraries with pre-trained models, Furo emphasizes learning by doing, enabling users to construct and train models step by step. It supports essential algorithms like **Deep Learning**, **Linear Regression**, **Meta-Learning**, **Decisional Trees**, and **Perceptrons**, making it a comprehensive tool for AI projects. 🌱🤖
 
