@@ -1,11 +1,11 @@
 # Furo: An AI Experimentation Ecosystem 🚀
 
-Welcome to **Furo**, a comprehensive platform for exploring, building, and understanding machine learning and natural language processing concepts. Designed with flexibility and user education in mind, Furo integrates a versatile machine learning library based on numpy[https://www.nature.com/articles/s41586-020-2649-2], advanced NLP tools, and web scraping utilities, enabling users to experiment and learn in a seamless environment. 🌟
+Welcome to **Furo**, a comprehensive platform for exploring, building, and understanding machine learning and natural language processing concepts. Designed with flexibility and user education in mind, Furo integrates a versatile machine learning library, advanced NLP tools, and web scraping utilities, enabling users to experiment and learn in a seamless environment. 🌟
 
 ## Key Components 🧩
 
 ### 1. **Furo ML Library** 🧠  
-The core library provides foundational and advanced machine learning algorithms, empowering users to implement models from scratch. Built entirely in **NumPy**, it emphasizes hands-on learning.  
+The core library provides foundational and advanced machine learning algorithms, empowering users to implement models from scratch. Built entirely in [**NumPy**](https://www.nature.com/articles/s41586-020-2649-2), it emphasizes hands-on learning.  
 #### Modules:
 - **Deep Learning**: Build and train neural networks with customizable layers and activation functions.
 - **Linear Regression**: Fit data and explore relationships with ease.
