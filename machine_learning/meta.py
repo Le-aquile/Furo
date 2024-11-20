@@ -1,5 +1,5 @@
 import numpy as np
-from activators import softmax
+from .activators import softmax
 class MAML:
     """
     A meta-learning model that can be trained across multiple tasks.
