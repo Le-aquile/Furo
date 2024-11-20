@@ -46,7 +46,7 @@ A dynamic environment for testing and benchmarking machine learning models. The 
 ---
 
 ### Philosophy: Learning by Building 🔧  
-Furo encourages **learning by doing**, making it an excellent tool for students, researchers, and professionals seeking to deepen their understanding of AI. The platform provides low-level control over algorithms, giving users the freedom to customize, tweak, and observe their behavior.
+Furo encourages **learning by doing**, making it an excellent tool for students and researchers seeking to deepen their understanding of AI. The platform provides low-level control over algorithms, giving users the freedom to customize, tweak, and observe their behavior.
 
 ---
 
