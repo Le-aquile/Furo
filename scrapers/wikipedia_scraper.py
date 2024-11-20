@@ -26,7 +26,7 @@ def get_pages_in_category(category_name, lang='it'):
         if subpage.ns == 0:  # Verifica se è una pagina di contenuto (non sottocategoria, ecc.)
             print(f"- {subpage.title}")
             page_titles.append(subpage.title)
-            page_content.apppend(subpage.text)
+            page_content.append(subpage.text)
     
     return zip(page_titles, page_content)
 

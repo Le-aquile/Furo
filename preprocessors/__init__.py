@@ -1,1 +1,1 @@
-from .FastBPE import FastBPE
+from .tokenizer import FastBPE
