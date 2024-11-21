@@ -1,7 +1,7 @@
 import pygame as pg
-
+from typing import NoReturn
 class Game:
-    def __init__(self, width=800, height=600, fps=60, training=True, agent=None):
+    def __init__(self, width=800, height=600, fps=60, training=True, agent=None) -> NoReturn:
         self.width = width
         self.height = height
         self.fps = fps

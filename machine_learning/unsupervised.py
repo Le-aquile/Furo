@@ -1,10 +1,13 @@
 import numpy as np
+from typing import NoReturn
+
+
 class Perceptron:
     """
     A simple single-layer Perceptron neural network.
     """
 
-    def __init__(self, learning_rate=0.01, epochs=1000):
+    def __init__(self, learning_rate=0.01, epochs=1000) -> NoReturn:
         """
         Initializes a Perceptron model with the given learning rate and number of epochs.
 

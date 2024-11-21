@@ -1,5 +1,6 @@
 import numpy as np
 from numpy.linalg import norm
+from typing import NoReturn
 try:
     from .activators import softmax
 except ImportError:
@@ -11,7 +12,7 @@ except ImportError:
 
 
 class MultiHeadAttention:
-    def __init__(self, length=4, dim_model=16, num_heads=2, tomask=False):
+    def __init__(self, length=4, dim_model=16, num_heads=2, tomask=False) -> NoReturn:
         assert dim_model % num_heads == 0, "dim_model must be divisible by num_heads"
         self.length = length
         self.dim_model = dim_model
@@ -63,7 +64,7 @@ class MultiHeadAttention:
 
 
 class FeedForwardNetwork:
-    def __init__(self, dim_model, dim_ff, activation="relu"):
+    def __init__(self, dim_model, dim_ff, activation="relu") -> NoReturn:
         """Initialize feed-forward network."""
         limit1 = np.sqrt(6 / (dim_model + dim_ff))
         limit2 = np.sqrt(6 / (dim_ff + dim_model))
@@ -86,7 +87,7 @@ class FeedForwardNetwork:
 
 
 class TransformerEncoder:
-    def __init__(self, length, dim_model, num_heads, dim_ff, tomask=False, activation="relu"):
+    def __init__(self, length, dim_model, num_heads, dim_ff, tomask=False, activation="relu") -> NoReturn:
         """Initialize Transformer Encoder."""
         self.length = length
         self.dim_model = dim_model
@@ -118,7 +119,7 @@ class TransformerEncoder:
         return x
 
 
-def positional_encoding(length, dim_model):
+def positional_encoding(length, dim_model) -> np.ndarray:
     """
     Generate positional encoding for a sequence.
 

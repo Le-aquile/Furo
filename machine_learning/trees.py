@@ -1,7 +1,8 @@
 import numpy as np
+from typing import NoReturn
 
 class Node:
-    def __init__(self, gini, samples, value, feature_index=None, threshold=None, left=None, right=None):
+    def __init__(self, gini, samples, value, feature_index=None, threshold=None, left=None, right=None) -> NoReturn:
         self.gini = gini
         self.samples = samples
         self.value = value
@@ -21,7 +22,7 @@ class DecisionTree:
         all leaves are pure or until all leaves contain less than two samples.
     """
 
-    def __init__(self, max_depth=None):
+    def __init__(self, max_depth=None) -> NoReturn:
         self.max_depth = max_depth
         self.root = None
 
@@ -43,7 +44,7 @@ class DecisionTree:
         probabilities = counts / len(y)
         return 1 - np.sum(probabilities**2)
 
-    def split_data(self, X, y, feature_index, threshold):
+    def split_data(self, X, y, feature_index, threshold) -> tuple:
         """
         Splits the data into two subsets based on the given feature index and threshold.
 

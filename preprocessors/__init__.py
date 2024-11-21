@@ -1,1 +1,1 @@
-from .tokenizer import FastBPE
+from .tokenizer import FastBPE, TokenBPEEncoder

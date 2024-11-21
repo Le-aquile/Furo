@@ -1,5 +1,5 @@
 import numpy as np
-
+from typing import NoReturn
 class LinearRegression2D:
     """
     Implements a simple 2D linear regression using NumPy.
@@ -22,7 +22,7 @@ class LinearRegression2D:
         predictions = model.predict(new_x)
     """
 
-    def __init__(self):
+    def __init__(self) -> NoReturn:
         self.a = None  # Slope coefficient
         self.b = None  # Intercept
 

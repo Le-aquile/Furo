@@ -1,5 +1,6 @@
 import numpy as np
 from .activators import softmax
+from typing import NoReturn
 class MAML:
     """
     A meta-learning model that can be trained across multiple tasks.
@@ -9,7 +10,7 @@ class MAML:
         learning_rate (float): Learning rate for task-specific updates.
         meta_learning_rate (float): Learning rate for meta-updates.
     """
-    def __init__(self, theta=np.random.randn(784, 10), learning_rate=0.01, meta_learning_rate=0.1):
+    def __init__(self, theta=np.random.randn(784, 10), learning_rate=0.01, meta_learning_rate=0.1) -> NoReturn:
         self.theta = theta
         self.learning_rate = learning_rate
         self.meta_learning_rate = meta_learning_rate
