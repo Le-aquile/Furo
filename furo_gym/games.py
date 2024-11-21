@@ -2,11 +2,11 @@
 import pygame as pg
 import random
 from .game import Game
-
+from typing import NoReturn
 
 
 class FallingGame(Game):
-    def __init__(self, speed=10,width=800, height=600, fps=60, training=True, agent=None, max_points=None,save_model=False,load_model=None):
+    def __init__(self, speed=10,width=800, height=600, fps=60, training=True, agent=None, max_points=None,save_model=False,load_model=None) -> NoReturn:
         super().__init__(width, height, fps, training, agent)
         self.player_size = 50
         self.player_pos = [width // 2, height - 2 * self.player_size]
