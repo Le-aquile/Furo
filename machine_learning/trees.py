@@ -1,5 +1,6 @@
 import numpy as np
-from typing import NoReturn
+from typing import NoReturn, List
+from collections import Counter
 
 class Node:
     def __init__(self, gini, samples, value, feature_index=None, threshold=None, left=None, right=None) -> NoReturn:
@@ -207,22 +208,82 @@ class DecisionTree:
 
 
 
-if __name__ == "__main__":
-    print("Example usage:")
+class RandomForest:
+    """
+    Random Forest classifier.
 
-    # x sono i valori degli oggetti
+    Parameters
+    ----------
+    size : int
+        Number of decision trees in the forest.
+    max_depth : int, optional
+        Maximum depth of each tree.
+    """
+    def __init__(self, size, max_depth=None) -> NoReturn:
+        self.size = size
+        self.max_depth = max_depth
+        self.trees = []
+
+    def fit(self, X, y) -> NoReturn:
+        """
+        Fits the random forest to the data using bootstrapping and feature subsampling.
+
+        Parameters
+        ----------
+        X : array-like
+            The feature matrix.
+        y : array-like
+            The labels of the samples.
+        """
+        n_samples, n_features = X.shape
+
+        for _ in range(self.size):
+            # Bootstrap sampling (with replacement)
+            indices = np.random.choice(n_samples, size=n_samples, replace=True)
+            X_bootstrap = X[indices]
+            y_bootstrap = y[indices]
+
+            # Create a DecisionTree and fit it
+            tree = DecisionTree(max_depth=self.max_depth)
+            tree.fit(X_bootstrap, y_bootstrap)
+
+            self.trees.append(tree)
+
+    def predict(self, X):
+        """
+        Predicts the class of multiple samples using majority voting.
+
+        Parameters
+        ----------
+        X : array-like
+            The feature matrix.
+
+        Returns
+        -------
+        predicted_classes : array-like
+            The predicted classes.
+        """
+        # Collect predictions from all trees
+        predictions = np.array([tree.predict(X) for tree in self.trees])
+
+        # Perform majority voting for each sample
+        majority_votes = [Counter(predictions[:, i]).most_common(1)[0][0] for i in range(X.shape[0])]
+
+        return np.array(majority_votes)
+
+
+if __name__ == "__main__":
+    print("Random Forest Example:")
+
+    # Example data
     X = np.array([[2.7, 2.5], [1.3, 1.5], [3.1, 3.3], [1.2, 1.2], [300.2, 300.1]])
-    # y sono le classi dei rispettivi oggetti
     y = np.array([0, 0, 1, 0, 2])
 
-    # Creazione e addestramento dell'albero decisionale
-    tree = DecisionTree(max_depth=5)
-    tree.fit(X, y)
+    # Create and train the Random Forest
+    forest = RandomForest(size=3, max_depth=5)
+    forest.fit(X, y)
 
-    # Predizioni
+    # Predictions
     samples = np.array([[2.5, 2.4], [1.3, 1.5], [3.2, 3.07], [1.2, 1.2], [300.2, 100.1]])
-    predictions = tree.predict(samples)
-    print("Predizioni:", predictions)
-
-
-
+    predictions = forest.predict(samples)
+    print("Random Forest Predictions:", predictions)
