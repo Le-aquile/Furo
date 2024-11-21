@@ -107,3 +107,18 @@ def leaky_relu(x, alpha=0.01) -> np.ndarray:
     """
     return np.maximum(alpha * x, x)
 
+def gelu(x) -> np.ndarray:
+    """
+    Applies the GELU activation function to the input.
+
+    Parameters
+    ----------
+    x : array-like
+        The input values.
+
+    Returns
+    -------
+    np.ndarray
+        The GELU of the input values, i.e. 0.5 * x * (1 + tanh(sqrt(2 / pi) * (x + 0.044715 * x^3))).
+    """
+    return 0.5 * x * (1 + np.tanh(np.sqrt(2 / np.pi) * (x + 0.044715 * x**3)))
