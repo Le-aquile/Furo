@@ -3,6 +3,7 @@ from .preprocessors import FastBPE
 from .machine_learning import (
     relu, sigmoid, tanh, leaky_relu, softmax, linear, swift,
     NeuralNetwork, mse_loss, mse_loss_derivative, RLAgent,
-    MAML, LinearRegression2D, DecisionTree, Perceptron
+    MAML, LinearRegression2D, DecisionTree, Perceptron, TransformerEncoder, 
+    MultiHeadAttention, FeedForwardNetwork, positional_encoding
 )
 from .furo_gym import FallingGame
