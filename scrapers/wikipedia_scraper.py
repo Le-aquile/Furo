@@ -1,43 +1,46 @@
 import wikipediaapi
 
-def get_pages_in_category(category_name, lang='it'):
+def get_pages_in_category(category_name, lang='en', to_zip=False):
     """
-    Raccoglie le pagine di una categoria su Wikipedia.
+    Collects the pages of a category on Wikipedia.
     Args:
-        category_name (str): Nome della categoria (senza "Categoria:").
-        lang (str): Codice della lingua (default: italiano - 'it').
+        category_name (str): Name of the category (without "Category:").
+        lang (str): Language code (default: English - 'en').
+        to_zip (bool): If True, returns a list of tuples (page_title, page_content).
 
     Returns:
-        List: Titoli delle pagine all'interno della categoria.
+        List: Page contents within the category or a list of tuples (page_title, page_content) if to_zip=True.
     """
-    # Specifica un user agent personalizzato
+    # Specify a custom user agent
     user_agent = "WikipediaInfoGetter/1.0"
     wiki_wiki = wikipediaapi.Wikipedia(user_agent=user_agent, language=lang)
     page_content = []
-    # Accedi alla categoria
-    category = wiki_wiki.page(f"Categoria:{category_name}")
+    # Access the category
+    category = wiki_wiki.page(f"Category:{category_name}")
     if not category.exists():
-        print(f"La categoria '{category_name}' non esiste.")
+        print(f"Category '{category_name}' does not exist.")
         return []
     
-    print(f"Pagine nella categoria '{category_name}':")
+    print(f"Pages in category '{category_name}':")
     page_titles = []
     for subpage in category.categorymembers.values():
-        if subpage.ns == 0:  # Verifica se è una pagina di contenuto (non sottocategoria, ecc.)
+        if subpage.ns == 0:  # Check if it is a content page (not a subcategory, etc.)
             print(f"- {subpage.title}")
             page_titles.append(subpage.title)
             page_content.append(subpage.text)
     
-    return zip(page_titles, page_content)
-
+    if to_zip:
+        return list(zip(page_titles, page_content))
+    else:
+        return page_content
 
 if __name__ == "__main__":
-    # Esempio di utilizzo
-    category_name = "Intelligenza artificiale"
+    # Example of usage
+    category_name = "Artificial intelligence"
     pages = get_pages_in_category(category_name)
 
-    # Puoi salvare i titoli o elaborarli ulteriormente
-    print("\nElenco di pagine:")
+    # You can save the titles or process them further
+    print("\nList of pages:")
     for page in pages:
         print(page)
 
