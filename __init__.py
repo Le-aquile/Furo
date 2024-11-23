@@ -4,7 +4,7 @@ from .machine_learning import (
     relu, sigmoid, tanh, leaky_relu, softmax, linear, swift,gelu,
     NeuralNetwork, mse_loss, mse_loss_derivative, RLAgent,
     MAML, LinearRegression2D, DecisionTree, Perceptron, TransformerEncoder, 
-    MultiHeadAttention, FeedForwardNetwork, positional_encoding, RandomForest
+    MultiHeadAttention, FeedForwardNetwork, positional_encoding, RandomForest, TransformerDecoder
 )
 from .furo_gym import FallingGame
 

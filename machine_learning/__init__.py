@@ -5,4 +5,4 @@ from .meta import MAML
 from .linregression import LinearRegression2D
 from .trees import DecisionTree, RandomForest
 from .unsupervised import Perceptron
-from .Transformers import TransformerEncoder, MultiHeadAttention, FeedForwardNetwork, positional_encoding
+from .Transformers import TransformerEncoder, MultiHeadAttention, FeedForwardNetwork, positional_encoding, TransformerDecoder

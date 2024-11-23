@@ -141,3 +141,40 @@ def positional_encoding(length, dim_model) -> np.ndarray:
     return pos_encoding
 
 
+
+
+class TransformerDecoder:
+    def __init__(self, length, dim_model, num_heads, dim_ff, tomask=False, activation="relu"):
+        self.length = length
+        self.dim_model = dim_model
+        self.attention1 = MultiHeadAttention(length, dim_model, num_heads, tomask = True)
+        self.attention2 = MultiHeadAttention(length, dim_model, num_heads, tomask = False)
+        self.ffn = FeedForwardNetwork(dim_model, dim_ff, activation)
+
+        # Layer normalization parameters
+        self.layer_norm1 = np.ones(dim_model)
+        self.layer_norm2 = np.ones(dim_model)
+
+
+    def _layer_norm(self, x):
+        mean = np.mean(x, axis=-1, keepdims=True)
+        std = np.std(x, axis=-1, keepdims=True)
+        return (x - mean) / (std + 1e-6)
+
+    def activate(self, x, encoder_output):
+        # Multi-head attention with residual and normalization
+        attention_output1 = self.attention1.activate(x, x, x)
+        x += attention_output1  # Residual connection
+        x = self._layer_norm(x) * self.layer_norm1  # Layer norm
+
+        # Multi-head attention with residual and normalization
+        attention_output2 = self.attention2.activate(x, encoder_output, encoder_output)
+        x += attention_output2  # Residual connection
+        x = self._layer_norm(x) * self.layer_norm2  # Layer norm
+
+        # Feed-forward network with residual and normalization
+        ffn_output = self.ffn.activate(x)
+        x += ffn_output  # Residual connection
+        x = self._layer_norm(x) * self.layer_norm2  # Layer norm
+
+        return x

@@ -2,14 +2,7 @@ import numpy as np
 
 from .activators import relu, sigmoid, tanh, leaky_relu, softmax, linear, swift
 from .optimizers import adam_optimizer, rmsprop, sgd
-from scipy.special import erf
 
-
-def gelu_derivative(x):
-    sqrt_2_pi = np.sqrt(2 / np.pi)
-    erf_part = erf(x / np.sqrt(2))
-    exp_part = np.exp(-x**2 / 2)
-    return 0.5 * (1 + erf_part) + (x * exp_part) / sqrt_2_pi
 def mse_loss(y_true, y_pred):
     return np.mean((y_true - y_pred) ** 2)
 
@@ -102,26 +95,24 @@ class NeuralNetwork:
                 )
 
     def _activation_derivative(self, layer_output, activation):
-        match activation:
-            case _ if activation == relu:
-                return np.where(layer_output > 0, 1, 0)
-            case _ if activation == sigmoid:
-                sigmoid_output = sigmoid(layer_output)
-                return sigmoid_output * (1 - sigmoid_output)
-            case _ if activation == tanh:
-                return 1 - np.tanh(layer_output) ** 2
-            case _ if activation == softmax:
-                return softmax(layer_output) * (1 - softmax(layer_output))
-            case _ if activation == linear:
-                return 1
-            case _ if activation == "gelu":
-                gelu_derivative(layer_output)
-            case _ if activation == swift:
-                sigmoid_x = sigmoid(layer_output)
-                return sigmoid_x + layer_output * sigmoid_x * (1 - sigmoid_x)
-            case _ if activation == leaky_relu:
-                alpha = 0.01
-                return np.where(layer_output > 0, 1, alpha)
+        if activation == relu:
+            return np.where(layer_output > 0, 1, 0)
+        elif activation == sigmoid:
+            sigmoid_output = sigmoid(layer_output)
+            return sigmoid_output * (1 - sigmoid_output)
+        elif activation == tanh:
+            return 1 - np.tanh(layer_output) ** 2
+        elif activation == softmax:
+            return softmax(layer_output) * (1 - softmax(layer_output))
+        elif activation == linear:
+            return 1
+        elif activation == swift:
+            sigmoid_x = sigmoid(layer_output)
+            return sigmoid_x + layer_output * sigmoid_x * (1 - sigmoid_x)
+        elif activation == leaky_relu:
+            alpha = 0.01
+            return np.where(layer_output > 0, 1, alpha)
+
     def train(self, X_train, y_train, epochs=100, batch_size=32):
         for epoch in range(epochs):
             permutation = np.random.permutation(X_train.shape[1])
