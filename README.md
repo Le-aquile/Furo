@@ -36,15 +36,6 @@ Gather and preprocess data from online sources with Furo’s robust scraping too
 
 ---
 
-### 4. **Furo Gym** 🏋️‍♂️  
-A dynamic environment for testing and benchmarking machine learning models. The **Furo Gym** includes:
-- Simulated scenarios for reinforcement learning.
-  to add:
-- Ready-to-use datasets for supervised and unsupervised learning experiments.
-- A framework for comparing model performance across tasks.
-
----
-
 ### Philosophy: Learning by Building 🔧  
 Furo encourages **learning by doing**, making it an excellent tool for students and researchers seeking to deepen their understanding of AI. The platform provides low-level control over algorithms, giving users the freedom to customize, tweak, and observe their behavior.
 
