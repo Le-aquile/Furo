@@ -48,7 +48,9 @@ class MiniBPE:
                     i += 1
             new_tokenized_texts.append(merged_tokens)
         return new_tokenized_texts
-
+        
+    def get_tokens(self) -> dict:
+        return {token: idx for idx, token in enumerate(self.vocab)}
 
     @staticmethod
     def tokenize(texts: List[str]) -> List[List[str]]:
