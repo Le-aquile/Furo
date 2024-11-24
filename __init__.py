@@ -6,6 +6,5 @@ from .machine_learning import (
     MAML, LinearRegression2D, DecisionTree, Perceptron, TransformerEncoder, 
     MultiHeadAttention, FeedForwardNetwork, positional_encoding, RandomForest, TransformerDecoder
 )
-from .furo_gym import FallingGame
 
 
