@@ -3,7 +3,8 @@ from typing import List, Tuple
 
 
 class MiniBPE:
-    def __init__(self, vocab_size: int) -> None:
+    def _init_(self, vocab_size: int) -> None:
+        
         self.vocab_size = vocab_size
         self.tokenized_texts = []
         self.vocab = set()
@@ -48,38 +49,98 @@ class MiniBPE:
                     i += 1
             new_tokenized_texts.append(merged_tokens)
         return new_tokenized_texts
-        
-    def get_tokens(self) -> dict:
-        return {token: idx for idx, token in enumerate(self.vocab)}
 
     @staticmethod
     def tokenize(texts: List[str]) -> List[List[str]]:
         return [list(word) + ["</w>"] for word in texts]  # Add </w> to signify word boundaries
 
-if __name__ == "__main__":
-    # Example texts for training
-    texts = [
-        "low",
-        "lower",
-        "newer",
-        "widow"
-    ]
 
-    # Specify the desired vocabulary size
-    vocab_size = 12
+    def final(self):
+        {token: idx for idx, token in enumerate(self.vocab)}
 
-    # Create an instance of MiniBPE
-    bpe = MiniBPE(vocab_size=vocab_size)
 
-    # Train the BPE model on the texts
-    vocab, tokenized_texts = bpe.train(texts)
+    def decode(self, tokens):
+        """
+        Decodes a list of token indices back into their corresponding words using the vocabulary.
 
-    # Print the resulting vocabulary
-    print("Vocabulary:")
-    print(vocab)
+        Args:
+            tokens (list): A list of token indices.
 
-    # Print the tokenized texts after training
-    print("\nTokenized Texts:")
-    for text in tokenized_texts:
-        print(text)
+        Returns:
+            list: A list of decoded words corresponding to the token indices.
+        """
+        vocab_dict = {v: k for k, v in enumerate(self.vocab)}
+        return [vocab_dict[token] for token in tokens]
+    
 
+    def dump(self):
+        """Saves the vocabulary to a file named vocab.vocab.
+        Each token is saved on a separate line."""
+        with open("vocab.vocab", "w") as f:
+            for token in self.vocab:
+                f.write(token + "\n")
+
+    def load(self):
+        """Loads the vocabulary from a file named vocab.vocab.
+        Each token is expected to be on a separate line."""
+        with open("vocab.txt", "r") as f:
+            self.vocab = set(f.read().splitlines())
+    
+
+    def digest(self, filename):
+        """
+        Reads a file line-by-line, tokenizes each line, appends it to tokenized_texts, and trains the model on the new tokens.
+        """
+        with open(filename, "r") as f:
+            for line in f:
+                tokens = self.tokenize(line)
+                self.tokenized_texts.append(tokens)
+                self.train(tokens)
+                
+    def _add_(self, other):
+        """
+        Overloads the '+' operator to combine the vocabularies of two MiniBPE objects.
+        The resulting MiniBPE object will have a vocabulary that is the union of the two operand vocabularies.
+        """
+        
+        if isinstance(other, MiniBPE):
+            combined_vocab = self.vocab.union(other.vocab)
+            return MiniBPE(len(combined_vocab))._replace_vocab(combined_vocab)
+        else:
+            raise TypeError("Operand must be an instance of MiniBPE")
+    
+    def _replace_vocab(self, new_vocab):
+        """
+        Replaces the vocabulary of this MiniBPE object with the given new vocabulary.
+
+        Args:
+            new_vocab (set): The new vocabulary to replace the existing one.
+
+        Returns:
+            MiniBPE: The modified MiniBPE object.
+        """
+
+        self.vocab = new_vocab
+        return self
+    
+    def _len_(self) -> int:
+        """
+        Returns the size of the vocabulary.
+
+        Returns:
+            int: The number of elements in the vocabulary.
+        """
+        return len(self.vocab)
+
+    def _eq_(self, value: object) -> bool:
+        """Checks if the given MiniBPE object has the same vocabulary as this object.
+
+        Args:
+            value (object): The object to compare.
+
+        Returns:
+            bool: True if the vocabularies are equal, False otherwise.
+        """
+        if isinstance(value, MiniBPE):
+            return self.vocab == value.vocab
+        return False
