@@ -29,12 +29,14 @@ class MultiHeadAttention:
         self.w_out = np.random.uniform(-limit, limit, (dim_model, dim_model))
 
     def _split_heads(self, x):
-        """Split input for multiple heads."""
-        return x.reshape(self.length, self.num_heads, self.dim_k).transpose(1, 0, 2)
+        """Split input into multiple heads (supports batch size)."""
+        batch_size = x.shape[0]
+        return x.reshape(batch_size, self.length, self.num_heads, self.dim_k).transpose(0, 2, 1, 3)
 
     def _combine_heads(self, x):
-        """Combine multiple heads into original dimensions."""
-        return x.transpose(1, 0, 2).reshape(self.length, self.dim_model)
+        """Combine heads back into original dimensions (supports batch size)."""
+        batch_size = x.shape[0]
+        return x.transpose(0, 2, 1, 3).reshape(batch_size, self.length, self.dim_model)
 
     def activate(self, q, k, v):
         """Perform multi-head attention."""
@@ -118,6 +120,14 @@ class TransformerEncoder:
 
         return x
 
+    def update_weights(self, grad, learning_rate):
+        """Update weights using gradients."""
+        self.attention.w_q -= learning_rate * grad
+        self.attention.w_k -= learning_rate * grad
+        self.attention.w_v -= learning_rate * grad
+        self.attention.w_out -= learning_rate * grad
+        self.ffn.w1 -= learning_rate * grad
+        self.ffn.w2 -= learning_rate * grad
 
 def positional_encoding(length, dim_model) -> np.ndarray:
     """
@@ -144,7 +154,7 @@ def positional_encoding(length, dim_model) -> np.ndarray:
 
 
 class TransformerDecoder:
-    def __init__(self, length, dim_model, num_heads, dim_ff, tomask=False, activation="relu"):
+    def __init__(self, length, dim_model, num_heads, dim_ff, activation="relu"):
         self.length = length
         self.dim_model = dim_model
         self.attention1 = MultiHeadAttention(length, dim_model, num_heads, tomask = True)
@@ -178,3 +188,19 @@ class TransformerDecoder:
         x = self._layer_norm(x) * self.layer_norm2  # Layer norm
 
         return x
+
+
+    def update_weights(self, grad, learning_rate):
+        """Update weights using gradients."""
+        self.attention1.w_q -= learning_rate * grad
+        self.attention1.w_k -= learning_rate * grad
+        self.attention1.w_v -= learning_rate * grad
+        self.attention1.w_out -= learning_rate * grad
+        self.attention2.w_q -= learning_rate * grad
+        self.attention2.w_k -= learning_rate * grad
+        self.attention2.w_v -= learning_rate * grad
+        self.attention2.w_out -= learning_rate * grad
+        self.ffn.w1 -= learning_rate * grad
+        self.ffn.w2 -= learning_rate * grad
+
+
